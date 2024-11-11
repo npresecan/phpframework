@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Response;
+
 class Router
 {
     private $routes = [];
@@ -10,19 +12,26 @@ class Router
     {
         $this->routes[] = [
             'url' => $url,
-            'method' => $method,
+            'method' => strtoupper($method),
             'callback' => $callback
         ];
     }
 
-    public function resolveRoute($url, $method)
+    public function resolveRoute(Request $request)
     {
+        $url = $_SERVER['REQUEST_URI'];
+        $method = $request->getMethod();
+
         foreach ($this->routes as $route) {
-            if ($route['url'] === $url && $route['method'] === $method) {
-                return call_user_func($route['callback']);
+            if ($route['url'] == $url && $route['method'] == $method) {
+                $response = call_user_func($route['callback'], $request);
+                if ($response instanceof Response) {
+                    return $response->send();
+                }
             }
         }
 
-        return "404 - Not found";
+        $response = new Response('Not Found', 404);
+        return $response->send();
     }
 }
