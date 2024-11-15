@@ -16,12 +16,16 @@ class Request implements RequestInterface
 
     public function getMethod(): string
     {
-        return $_SERVER['REQUEST_METHOD'] ?? 'GET';
+        return $_SERVER['REQUEST_METHOD'];
     }
 
     public function getPath(): string
     {
-        $path = $_SERVER['REQUEST_URI'] ?? '/';
-        return strtok($path, '?');
+        return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    }
+
+    public function getRouteParams(): array
+    {
+        return $_REQUEST['route_params'] ?? [];
     }
 }
