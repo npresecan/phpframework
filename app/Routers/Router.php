@@ -1,14 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Routers;
 
-use App\Response;
+use App\Requests\Request;
+use App\Responses\Response;
 
 class Router
 {
     private $routes = [];
 
-    public function newRoute($url, $method, $callback)
+    public function newRoute(string $url, string $method, callable $callback): void
     {
         $this->routes[] = [
             'url' => $url,
@@ -17,9 +18,9 @@ class Router
         ];
     }
 
-    public function resolveRoute(Request $request)
+    public function resolveRoute(Request $request): ?string
     {
-        $url = $_SERVER['REQUEST_URI'];
+        $url = $request->getPath();
         $method = $request->getMethod();
 
         foreach ($this->routes as $route) {
