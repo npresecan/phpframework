@@ -30,7 +30,7 @@ class Router
                 array_shift($matches);
                 $_REQUEST['route_params'] = $matches;
 
-                $response = call_user_func_array($route['callback'], $matches);
+                $response = call_user_func_array($route['callback'], [$request]);
 
                 if ($response instanceof Response) {
                     return $response->send(); 

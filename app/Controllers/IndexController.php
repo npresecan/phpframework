@@ -7,6 +7,7 @@ use App\Responses\JsonResponse;
 use App\Responses\HtmlResponse;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use App\Requests\Request;
 
 class IndexController
 {
@@ -42,5 +43,16 @@ class IndexController
             'message' => 'Ovo je HTML odgovor generiran pomoću Twig-a'
         ]);
         return new HtmlResponse($content);
+    }
+
+    public function index(): Response
+    {
+        return new Response('Praksa');
+    }
+
+    public function dodaj(Request $request): Response
+    {
+        $name = $request->getPostParam('name') ?? 'Gost';
+        return new Response('Bok, ' . $name);
     }
 }

@@ -7,14 +7,10 @@ use App\Controllers\IndexController;
 
 $indexController = new IndexController();
 
-$router->newRoute('/index', 'GET', function (Request $request): Response {
-    return new Response('Praksa');
-});
 
-$router->newRoute('/dodaj', 'POST', function (Request $request): Response {
-    $name = $request->getPostParam('name') ?? 'Gost';
-    return new Response('Bok, ' . $name);
-});
+$router->newRoute('/index', 'GET', [$indexController, 'index']);
+
+$router->newRoute('/dodaj', 'POST', [$indexController, 'dodaj']);
 
 $router->newRoute('/index/response', 'GET', [$indexController, 'indexAction']);
 

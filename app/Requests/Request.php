@@ -4,12 +4,12 @@ namespace App\Requests;
 
 class Request implements RequestInterface
 {
-    public function getQueryParam(string $key): string
+    public function getQueryParam(string $key): ?string
     {
         return $_GET[$key] ?? null;
     }
 
-    public function getPostParam(string $key): string
+    public function getPostParam(string $key): ?string
     {
         return $_POST[$key] ?? null;
     }
