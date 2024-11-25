@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
-use App\Database\Connection;
+use Database\Connection;
 use PDO;
+use Database\Traits\HasTimestamps;
+use Database\Traits\SoftDeletes;
 
 abstract class Model {
+    use HasTimestamps, SoftDeletes;
+
     protected static string $table;
     protected static string $primaryKey = 'id'; 
     protected array $attributes = []; 
@@ -137,5 +141,10 @@ abstract class Model {
         }
 
         return new static($result);
+    }
+
+    public function toArray(): array
+    {
+        return $this->attributes;
     }
 }

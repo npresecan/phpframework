@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database;
+namespace Database;
 
 use PDO;
 use PDOException;
@@ -11,7 +11,7 @@ class Connection{
 
     private function __construct()
     {
-        $config = require __DIR__ . '/../../config/database.php'; 
+        $config = require __DIR__ . '/../config/database.php'; 
 
         try {
             $this->pdo = new PDO(

@@ -27,11 +27,9 @@ class Router
             $pattern = $this->convertRouteToRegex($route['url']);
 
             if (preg_match($pattern, $url, $matches) && strtoupper($route['method']) == $method) {
-                array_shift($matches);
-                $_REQUEST['route_params'] = $matches;
-
+                array_shift($matches); 
+                $_REQUEST['route_params'] = $matches; 
                 $response = call_user_func_array($route['callback'], [$request]);
-
                 if ($response instanceof Response) {
                     return $response->send(); 
                 }
